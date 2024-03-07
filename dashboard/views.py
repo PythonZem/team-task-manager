@@ -52,3 +52,19 @@ class MyProjectListView(LoginRequiredMixin, ListView):
         return Project.objects.filter(team=self.request.user)
 
 
+class ProjectDetailView(LoginRequiredMixin, DetailView):
+    model = Project
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tasks = Task.objects.filter(project_id=self.kwargs["pk"])
+        context["tasks"] = tasks
+        return context
+
+
+class ProjectCreateView(LoginRequiredMixin, CreateView):
+    model = Project
+    form_class = ProjectCreateForm
+    success_url = reverse_lazy("project-list")
+
+
