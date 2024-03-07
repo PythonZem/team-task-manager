@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    {{ car.model }}
+    <a href="" class="btn btn-danger link-to-page">
+      Delete
+    </a>
+
+    <a href="" class="btn btn-secondary link-to-page">
+      Update
+    </a>
+  </h1>
+  <p>Manufacturer: ({{ car.manufacturer.name }}, {{ car.manufacturer.country }})</p>
+  <h1>
+    Drivers
+
+    {% if task in user.tasks.all %}
+      <a href="{% url 'taxi:toggle-car-assign' pk=car.id %}" class="btn btn-danger link-to-page">
+        Delete me from this car
+      </a>
+    {% else %}
+      <a href="{% url 'taxi:toggle-car-assign' pk=car.id %}" class="btn btn-success link-to-page">
+        Assign me from this car
+      </a>
+    {% endif %}
+
+  </h1>
+  <hr>
+  <ul>
+    {% for worker in task.workers.all %}
+      <li>{{ worker.position.name }} ({{ worker.first_name }} {{ worker.last_name }})</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
