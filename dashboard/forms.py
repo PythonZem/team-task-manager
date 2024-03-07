@@ -26,3 +26,14 @@ class WorkerCreationForm(UserCreationForm):
             "last_name",
         )
 
+
+class ProjectCreateForm(forms.ModelForm):
+    team = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = Project
+        fields = "__all__"
