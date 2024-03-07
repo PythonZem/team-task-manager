@@ -89,3 +89,12 @@ class WorkerDeleteView(LoginRequiredMixin, DeleteView):
     model = Worker
     success_url = reverse_lazy("worker-list")
 
+
+@login_required
+def toggle_assign_to_task(request, pk):
+    worker = Worker.objects.get(id=request.user.id)
+    worker.task_assignee.add(pk)
+    project_id = Task.objects.get(id=pk).project_id
+    return HttpResponseRedirect(
+        reverse_lazy(viewname="project-detail", args=[project_id])
+    )
