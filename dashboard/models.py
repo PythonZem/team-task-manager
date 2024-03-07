@@ -1,9 +1,25 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, PermissionsMixin, Group, Permission
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 
 
-class Position(models.Model):
+class Position(PermissionsMixin):
     name = models.CharField(max_length=40)
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_("groups"),
+        blank=True,
+        related_name="position_set",
+        related_query_name="position",
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name=_("position permissions"),
+        blank=True,
+        help_text=_("Specific permissions for this user."),
+        related_name="position_set",
+        related_query_name="position",
+    )
 
     def __str__(self):
         return self.name
