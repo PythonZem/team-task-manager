@@ -76,3 +76,16 @@ class MyTaskListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Task.objects.filter(assignee=self.request.user)
 
+
+class WorkerListView(LoginRequiredMixin, ListView):
+    model = Worker
+
+
+class WorkerUpdateView(LoginRequiredMixin, UpdateView):
+    model = Worker
+
+
+class WorkerDeleteView(LoginRequiredMixin, DeleteView):
+    model = Worker
+    success_url = reverse_lazy("worker-list")
+
