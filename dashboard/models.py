@@ -27,6 +27,16 @@ class TaskType(models.Model):
         return self.name
 
 
+class Project(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.TextField()
+    deadline = models.DateTimeField(auto_now_add=True)
+    team = models.ManyToManyField(Worker, related_name="projects")
+
+    def __str__(self):
+        return self.name
+
+
 class Task(models.Model):
     CHOICES = (
         (1, "Low"),
