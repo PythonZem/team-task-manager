@@ -68,3 +68,11 @@ class ProjectCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("project-list")
 
 
+class MyTaskListView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = "dashboard/my_task_list.html"
+    context_object_name = "task_list"
+
+    def get_queryset(self):
+        return Task.objects.filter(assignee=self.request.user)
+
