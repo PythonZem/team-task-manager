@@ -43,3 +43,12 @@ class WorkerCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("worker-list")
 
 
+class MyProjectListView(LoginRequiredMixin, ListView):
+    model = Project
+    template_name = "dashboard/my_project_list.html"
+    context_object_name = "projects_list"
+
+    def get_queryset(self):
+        return Project.objects.filter(team=self.request.user)
+
+
