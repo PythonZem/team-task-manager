@@ -52,11 +52,13 @@ class Task(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
-    deadline = models.DateTimeField(auto_now_add=True)
+    deadline = models.DateField(auto_now_add=True)
     is_completed = models.BooleanField(default=False)
-    priority = models.CharField(max_length=20, choices=CHOICES)
+    priority = models.CharField(max_length=20, choices=CHOICES_PRIORITY)
+    status = models.CharField(max_length=20, choices=CHOICES_STATUS)
     task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
-    assignee = models.ManyToManyField(Worker, related_name="workers")
+    assignee = models.ManyToManyField(Worker, related_name="task_assignee")
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
