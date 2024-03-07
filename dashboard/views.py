@@ -35,3 +35,11 @@ class TaskCreateView(CreateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("task-list")
+
+
+class WorkerCreateView(LoginRequiredMixin, CreateView):
+    model = Worker
+    form_class = WorkerCreationForm
+    success_url = reverse_lazy("worker-list")
+
+
