@@ -20,3 +20,18 @@ def index(request):
     }
 
     return render(request, "dashboard/index.html", context=context)
+
+
+class TaskListView(ListView):
+    model = Task
+    paginate_by = 20
+
+
+class TaskDetailView(DetailView):
+    model = Task
+
+
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    success_url = reverse_lazy("task-list")
