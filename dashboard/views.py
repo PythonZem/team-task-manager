@@ -9,13 +9,14 @@ from dashboard.forms import TaskForm, ProjectCreateForm, WorkerCreationForm
 from dashboard.models import Task, Worker, Project
 
 
+@login_required
 def index(request):
-    num_tasks = Task.objects.count()
-    num_workers = Worker.objects.count()
+    num_tasks = Task.objects.filter(assignee=request.user).count()
+    num_projects = Project.objects.filter(team=request.user).count()
 
     context = {
-        "num_workers": num_workers,
-        "num_tasks": num_tasks,
+        "user_tasks": num_tasks,
+        "user_projects": num_projects,
     }
 
     return render(request, "dashboard/index.html", context=context)
