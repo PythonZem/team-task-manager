@@ -38,11 +38,16 @@ class Project(models.Model):
 
 
 class Task(models.Model):
-    CHOICES = (
-        (1, "Low"),
-        (2, "Medium"),
-        (3, "High"),
-        (4, "Urgent"),
+    CHOICES_PRIORITY = (
+        ("Low", "Low"),
+        ("Medium", "Medium"),
+        ("High", "High"),
+        ("Urgent", "Urgent"),
+    )
+    CHOICES_STATUS = (
+        ("TO DO", "TO DO"),
+        ("IN PROGRESS", "IN PROGRESS"),
+        ("DONE", "DONE"),
     )
 
     name = models.CharField(max_length=255)
