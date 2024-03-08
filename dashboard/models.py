@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Position(PermissionsMixin):
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40, unique=True)
     groups = models.ManyToManyField(
         Group,
         verbose_name=_("groups"),
@@ -37,7 +37,7 @@ class Worker(AbstractUser):
 
 
 class TaskType(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -45,8 +45,8 @@ class TaskType(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=30)
-    description = models.TextField()
-    deadline = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(blank=True, null=True)
+    deadline = models.DateField(blank=True, null=True)
     team = models.ManyToManyField(Worker, related_name="projects")
 
     def __str__(self):
@@ -60,19 +60,13 @@ class Task(models.Model):
         ("High", "High"),
         ("Urgent", "Urgent"),
     )
-    CHOICES_STATUS = (
-        ("TO DO", "TO DO"),
-        ("IN PROGRESS", "IN PROGRESS"),
-        ("DONE", "DONE"),
-    )
 
     name = models.CharField(max_length=255)
-    description = models.TextField()
-    deadline = models.DateField(auto_now_add=True)
+    description = models.TextField(blank=True, null=True)
+    deadline = models.DateField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=20, choices=CHOICES_PRIORITY)
-    status = models.CharField(max_length=20, choices=CHOICES_STATUS)
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE)
+    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, blank=True, null=True)
     assignee = models.ManyToManyField(Worker, related_name="task_assignee")
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
