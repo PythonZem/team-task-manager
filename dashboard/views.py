@@ -12,11 +12,14 @@ from dashboard.models import Task, Worker, Project
 @login_required
 def index(request):
     num_tasks = Task.objects.filter(assignee=request.user).count()
+    num_completed_tasks = Task.objects.filter(assignee=request.user, is_completed=True).count()
     num_projects = Project.objects.filter(team=request.user).count()
 
     context = {
         "user_tasks": num_tasks,
         "user_projects": num_projects,
+        "num_completed_tasks": num_completed_tasks,
+        "today_tasks": Task.objects.filter(assignee=request.user, deadline=datetime.now())
     }
 
     return render(request, "dashboard/index.html", context=context)
