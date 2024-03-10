@@ -6,12 +6,12 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dashboard', '0003_alter_task_task_type'),
+        ("dashboard", "0003_alter_task_task_type"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='task',
-            name='status',
+            model_name="task",
+            name="status",
         ),
     ]

@@ -1,12 +1,6 @@
 from django.contrib import admin
 
-from dashboard.models import (
-    Worker,
-    Task,
-    TaskType,
-    Position,
-    Project
-)
+from dashboard.models import Worker, Task, TaskType, Position, Project
 
 
 admin.site.register(Worker)

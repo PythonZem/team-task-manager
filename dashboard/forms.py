@@ -10,7 +10,7 @@ class TaskForm(forms.ModelForm):
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    deadline = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}))
 
     class Meta:
         model = Task
@@ -32,7 +32,7 @@ class ProjectCreateForm(forms.ModelForm):
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
     )
-    deadline = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    deadline = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}))
 
     class Meta:
         model = Project

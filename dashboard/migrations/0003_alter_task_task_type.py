@@ -7,13 +7,18 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('dashboard', '0002_alter_position_name_alter_tasktype_name'),
+        ("dashboard", "0002_alter_position_name_alter_tasktype_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='task',
-            name='task_type',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='dashboard.tasktype'),
+            model_name="task",
+            name="task_type",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="dashboard.tasktype",
+            ),
         ),
     ]

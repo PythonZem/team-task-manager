@@ -26,7 +26,9 @@ class Position(PermissionsMixin):
 
 
 class Worker(AbstractUser):
-    position = models.ForeignKey(Position, on_delete=models.CASCADE, blank=True, null=True)
+    position = models.ForeignKey(
+        Position, on_delete=models.CASCADE, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "worker"
@@ -66,7 +68,9 @@ class Task(models.Model):
     deadline = models.DateField(blank=True, null=True)
     is_completed = models.BooleanField(default=False)
     priority = models.CharField(max_length=20, choices=CHOICES_PRIORITY)
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, blank=True, null=True)
+    task_type = models.ForeignKey(
+        TaskType, on_delete=models.CASCADE, blank=True, null=True
+    )
     assignee = models.ManyToManyField(Worker, related_name="task_assignee")
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
