@@ -34,7 +34,8 @@ class WorkerCreateForm(UserCreationForm):
         )
 
 
-class ProjectCreateForm(forms.ModelForm):
+class ProjectForm(forms.ModelForm):
+
     team = forms.ModelMultipleChoiceField(
         queryset=get_user_model().objects.all(),
         widget=forms.CheckboxSelectMultiple,
