@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from dashboard.models import Task, Worker, Project
@@ -18,7 +17,6 @@ class TaskForm(forms.ModelForm):
         fields = "__all__"
 
 
-class WorkerCreationForm(UserCreationForm):
 class WorkerForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = Worker
