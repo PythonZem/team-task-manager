@@ -2,6 +2,20 @@
 
 Team Task Manager is a specialized task management tool designed to optimize the product development process within your team. With this tool, you can efficiently manage tasks, assign them to team members, track progress, and ensure timely completion of tasks.
 
+## Installation
+
+Python3 must be already installed
+
+```shell
+git clonene https://github.com/PythonZem/team-task-manager.git
+cd team_tast_manager
+python3 -m venv venv
+source venv\Scripnts\activate
+pip install -r requirements.txt
+python manager.py runserver
+```
+
+
 ## Features
 
 - **Task Creation**: Create tasks for various aspects of product development, such as coding, design, testing, and project management.
