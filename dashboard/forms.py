@@ -18,11 +18,13 @@ class TaskForm(forms.ModelForm):
 
 
 class WorkerForm(UserChangeForm):
+
     class Meta(UserChangeForm.Meta):
         model = Worker
 
 
 class WorkerCreateForm(UserCreationForm):
+
     class Meta(UserCreationForm.Meta):
         model = Worker
         fields = UserCreationForm.Meta.fields + (

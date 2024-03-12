@@ -27,6 +27,7 @@ class TaskFormTest(TestCase):
 
 
 class WorkerFormTest(TestCase):
+
     def test_worker_form_valid(self):
         user = get_user_model().objects.create(username='testuser', password='password')
         position = Position.objects.create(name='Test Position')
@@ -62,6 +63,7 @@ class WorkerCreateFormTest(TestCase):
 
 
 class ProjectFormTest(TestCase):
+
     def test_project_form_valid(self):
         form_data = {
             'name': 'Test Project',
