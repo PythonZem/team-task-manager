@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
@@ -59,14 +59,14 @@ class ProjectTaskUpdateView(UpdateView):
     success_url = reverse_lazy("project-detail")
 
     def get_success_url(self):
-        project_id = Task.objects.get(id=self.kwargs["pk"]).project_id
+        project_id = get_object_or_404(Task, id=self.kwargs["pk"]).project_id
         return reverse_lazy("project-detail", kwargs={"pk": project_id})
 
 
 @login_required()
 def task_delete_in_project(request, pk):
-    project_id = Task.objects.get(id=pk).project_id
-    Task.objects.get(id=pk).delete()
+    project_id = get_object_or_404(Task, id=pk).project_id
+    get_object_or_404(Task, id=pk).delete()
     return HttpResponseRedirect(
         reverse_lazy(viewname="project-detail", args=[project_id])
     )
@@ -74,13 +74,13 @@ def task_delete_in_project(request, pk):
 
 @login_required()
 def task_delete_in_my_task(request, pk):
-    Task.objects.get(id=pk).delete()
+    get_object_or_404(Task, id=pk).delete()
     return HttpResponseRedirect(reverse_lazy(viewname="my-task-list"))
 
 
 @login_required()
 def my_task_make_is_done(request, pk):
-    task = Task.objects.get(id=pk)
+    task = get_object_or_404(Task, id=pk)
     task.is_completed = True
     task.save()
     return HttpResponseRedirect(reverse_lazy(viewname="my-task-list"))
@@ -88,10 +88,11 @@ def my_task_make_is_done(request, pk):
 
 @login_required()
 def project_task_make_is_done(request, pk):
-    task = Task.objects.get(id=pk)
+    task = get_object_or_404(Task, id=pk)
+    task.is_completed = True
     task.is_completed = True
     task.save()
-    project_id = Task.objects.get(id=pk).project_id
+    project_id = get_object_or_404(Task, id=pk).project_id
     return HttpResponseRedirect(
         reverse_lazy(viewname="project-detail", args=[project_id])
     )
@@ -99,9 +100,9 @@ def project_task_make_is_done(request, pk):
 
 @login_required
 def toggle_assign_to_task(request, pk):
-    worker = Worker.objects.get(id=request.user.id)
+    worker = get_object_or_404(Worker, id=request.user.id)
     worker.task_assignee.add(pk)
-    project_id = Task.objects.get(id=pk).project_id
+    project_id = get_object_or_404(Task, id=pk).project_id
     return HttpResponseRedirect(
         reverse_lazy(viewname="project-detail", args=[project_id])
     )
