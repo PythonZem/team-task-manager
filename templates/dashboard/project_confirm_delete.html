@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Delete Project?</h1>
+    <h6>All task in this project will delete!</h6>
+    <ul>
+        <li>Total task in this project: <b>{{ tasks.count }}</b></li>
+    </ul>
+  <form action="" method="post">
+    {% csrf_token %}
+
+    <input type="submit" value="Yes" class="btn btn-danger">
+    <a class="btn btn-secondary" href="{% url "worker-list" %}">Cancel</a>
+  </form>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <br>
+  <h1>
+    All Projects
+    <a class="btn btn-success" href="{% url "project-create" %}">Create Project</a>
+  </h1>
+    <br>
+  {% if projects_list %}
+    <table class="table">
+      <tr>
+          <th>Name</th>
+          <th>Deadline</th>
+          <th>Team Members</th>
+          <th>Description</th>
+      </tr>
+
+      {% for project in projects_list %}
+        <tr>
+            <td>
+              {{ project.name }}
+            </td>
+          <td>
+              {{ project.deadline }}
+          </td>
+            <td>
+                {{ project.team.count }}
+            </td>
+          <td>
+              {{ project.description }}
+          </td>
+            <td>
+                <a class="btn btn-outline-primary" href="{% url 'project-detail' pk=project.id %} ">View</a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>There are no projects!</p>
+  {% endif %}
+{% endblock %}

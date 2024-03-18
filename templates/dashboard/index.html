@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 class="mb-4">Your statistics</h2>
+      <ul class="list-group">
+        <li class="list-group-item"><strong>Your Tasks:</strong> {{ user_tasks }}</li>
+        <li class="list-group-item"><strong>Completed Tasks:</strong> {{ num_completed_tasks }}</li>
+        <li class="list-group-item"><strong>Your Projects:</strong> {{ user_projects }}</li>
+      </ul>
+    </div>
+    <div class="col-md-8 mt-4">
+      <h4 class="mb-3">Today's Tasks</h4>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Priority</th>
+              <th>Deadline</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in today_tasks %}
+              <tr>
+                <td>{{ task.project.name }}</td>
+                <td>{{ task.name }}</td>
+                <td>{{ task.task_type.name }}</td>
+                <td>{{ task.priority }}</td>
+                <td>{{ task.deadline }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

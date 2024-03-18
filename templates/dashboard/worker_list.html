@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Our Team
+      <a href="{% url 'worker-create' %}" class="btn btn-success">Add Comrade</a>
+  </h1>
+
+  <div class="ml-3">
+      {% if worker_list %}
+        {% for worker in worker_list %}
+            <ul>
+                <h5>{{ worker.position.name }} ({{ worker.first_name }} {{ worker.last_name }})</h5>
+                <h6>Projects</h6>
+                    <ul>
+                        {% for project in worker.projects.all %}
+                        <li>
+                            {{ project.name }}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                
+                <br>
+                <a href="{% url 'worker-update' pk=worker.id %}" class="btn btn-primary">Update Info</a>
+                <a href="{% url 'worker-delete' pk=worker.id %}" class="btn btn-danger">Delete Worker</a>
+            <hr>
+            </ul>
+        {% endfor %}
+    {% else %}
+      <p>No workers!</p>
+    {% endif %}
+  </div>
+{% endblock %}

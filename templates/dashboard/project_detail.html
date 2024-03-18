@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>
+        {{ project.name }}
+        <a class="btn btn-primary" href="{% url "project-update" pk=project.id %}">Edit Project</a>
+        <a class="btn btn-danger link-to-page" href="{% url "my-project-delete" pk=project.id %}">Delete Projects</a>
+    </h1>
+    <hr>
+    <h3>
+        Team
+    </h3>
+    {% for worker in project.team.all %}
+        <li>{{ worker.position }} ({{ worker.first_name }} {{ worker.last_name }})</li>
+    {% endfor %}
+    <br>
+    <h3>Description</h3>
+    <div class="content">
+        <p>{{ project.description }}</p>
+    </div>
+    <br>
+    <h3>
+        Tasks
+        <a href="{% url 'project-task-create' pk=project.id %}" class="btn btn-success">Add</a>
+    </h3>
+    <table class="table">
+      <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Priority</th>
+          <th>Deadline</th>
+          <th>Action</th>
+      </tr>
+
+      {% for task in tasks %}
+        <tr>
+          <td>
+              <a href="{% url "task-detail" pk=task.id %}">{{ task.name }}</a>
+          </td>
+          <td>
+              {{ task.task_type.name }}
+          </td>
+            <td>
+                {{ task.priority }}
+            </td>
+            <td>
+              {{ task.deadline }}
+          </td>
+            <td>
+                {% if user in task.assignee.all %}
+                  {% if task.is_completed %}
+                      <h6>Done!</h6>
+                  {% else %}
+                      <a class="btn btn-outline-success" href="{% url "project-task-make-done" pk=task.id %}">✔️</a>
+                  {% endif %}
+                    {% else %}
+                        <a class="btn btn-outline-primary" href="{% url "toggle-assign-to-task" pk=task.id %}">Add me</a>
+                {% endif %}
+            </td>
+            <td>
+                <a class="btn btn-outline-primary" href="{% url "project-task-update" pk=task.id %}">✎</a>
+            </td>
+            <td>
+                <a class="btn btn-outline-danger" href="{% url "task-delete-in-project" pk=task.id%}">❌</a>
+            </td>
+        </tr>
+      {% endfor %}
+    </table>
+    <hr>
+{% endblock %}
